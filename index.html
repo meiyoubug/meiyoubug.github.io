@@ -8,12 +8,12 @@
   <link rel="dns-prefetch" href="http://example.com">
   <title>welcoe to zc&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="积跬步，至千里">
+  <meta name="description" content="一个收藏回忆与分享技术的地方！">
 <meta property="og:type" content="website">
 <meta property="og:title" content="welcoe to zc&#39;s blog">
 <meta property="og:url" content="http://example.com/index.html">
 <meta property="og:site_name" content="welcoe to zc&#39;s blog">
-<meta property="og:description" content="积跬步，至千里">
+<meta property="og:description" content="一个收藏回忆与分享技术的地方！">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="zc">
 <meta name="twitter:card" content="summary">
@@ -153,6 +153,175 @@
           </div>
           <div id="js-content" class="content-ll">
             
+  
+    <article id="post-Spring从IOC容器中获取bean" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/12/Spring%E4%BB%8EIOC%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%8E%B7%E5%8F%96bean/">Spring从IOC容器中获取bean</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/12/Spring%E4%BB%8EIOC%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%8E%B7%E5%8F%96bean/" class="archive-article-date">
+  	<time datetime="2021-10-12T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Spring从IOC容器中获取bean"><a href="#Spring从IOC容器中获取bean" class="headerlink" title="Spring从IOC容器中获取bean"></a>Spring从IOC容器中获取bean</h1><h2 id="Spring的两大核心机制"><a href="#Spring的两大核心机制" class="headerlink" title="Spring的两大核心机制"></a>Spring的两大核心机制</h2><ul>
+<li><p>IOC:工厂模式</p>
+</li>
+<li><p>AOC：代理模式  </p>
+</li>
+</ul>
+<h2 id="IOC"><a href="#IOC" class="headerlink" title="IOC"></a>IOC</h2><p>IOC是spring框架的灵魂，控制反转</p>
+<p>lombok可以帮助开发者自动生成实体类相关的方法。</p>
+<p>倒入lombok的依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.projectlombok<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>lombok<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">           <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.18.10<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>使用方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Integer id;</span><br><span class="line">    <span class="keyword">private</span>  String name;</span><br><span class="line">    <span class="keyword">private</span>  Integer age;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>lombok的注解配置：</p>
+<ul>
+<li><p>@Getter and @Setter 生成get和set方法</p>
+</li>
+<li><p>@ToString  生成toString()方法，默认情况下，它会按顺序（以逗号分隔）打印你的类名称以及每个字段。</p>
+</li>
+<li><p>@EqualsAndHashCode   生成hashCode()和equals()方法，默认情况下，它将使用所有非静态，非transient字段。但可以通过在可选的exclude参数中来排除更多字段。或者，通过在parameter参数中命名它们来准确指定希望使用哪些字段。</p>
+</li>
+<li><p>@NoArgsConstructor</p>
+<p>@NoArgsConstructor生成一个无参构造方法。当类中有final字段没有被初始化时，编译器会报错，此时可用@NoArgsConstructor(force = true)，然后就会为没有初始化的final字段设置默认值 0 / false / null。对于具有约束的字段（例如@NonNull字段），不会生成检查或分配，因此请注意，正确初始化这些字段之前，这些约束无效。</p>
+</li>
+<li><p>@RequiredArgsConstructor</p>
+<p>@RequiredArgsConstructor会生成构造方法（可能带参数也可能不带参数），如果带参数，这参数只能是以final修饰的未经初始化的字段，或者是以@NonNull注解的未经初始化的字段<br> @RequiredArgsConstructor(staticName = “of”)会生成一个of()的静态方法，并把构造方法设置为私有的</p>
+</li>
+<li><p>@AllArgsConstructor 生成一个全参数的构造方法</p>
+</li>
+<li><p>@Data</p>
+<p>@Data 包含了 @ToString、@EqualsAndHashCode、@Getter / @Setter和@RequiredArgsConstructor的功能</p>
+</li>
+<li><h6 id="Accessors"><a href="#Accessors" class="headerlink" title="@Accessors"></a>@Accessors</h6><blockquote>
+<p>@Accessors 主要用于控制生成的getter和setter<br> <strong>主要参数介绍</strong></p>
+<ul>
+<li>fluent boolean值，默认为false。此字段主要为控制生成的getter和setter方法前面是否带get/set</li>
+<li>chain boolean值，默认false。如果设置为true，setter返回的是此对象，方便链式调用方法</li>
+<li>prefix 设置前缀 例如：@Accessors(prefix = “abc”) private String abcAge  当生成get/set方法时，会把此前缀去掉</li>
+</ul>
+</blockquote>
+</li>
+<li><p>@Synchronized</p>
+<p>给方法加上同步锁</p>
+</li>
+</ul>
+<h3 id="开发步骤"><a href="#开发步骤" class="headerlink" title="开发步骤"></a>开发步骤</h3><p>1.创建Maven工程，pom.xml中倒入相关依赖</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-context<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>5.2.3.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>2.在resources路径下创建sping.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.springframework.org/schema/beans&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">       <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="string"><span class="tag">           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd&quot;</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;student&quot;</span> <span class="attr">class</span>=<span class="string">&quot;entity.Student&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>3.Ioc容器通过读取spring.xml文件，加载bean标签来创建对象</p>
+<p>4.读取API获取IOC容器中已经创建的对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ApplicationContext applicationContext=<span class="keyword">new</span> ClassPathXmlApplicationContext(<span class="string">&quot;spring.xml&quot;</span>);</span><br><span class="line">       Student student=(Student)applicationContext.getBean(<span class="string">&quot;student&quot;</span>);</span><br><span class="line">       System.out.println(student);</span><br></pre></td></tr></table></figure>
+
+<h2 id="IOC容器创建bean的两种方式"><a href="#IOC容器创建bean的两种方式" class="headerlink" title="IOC容器创建bean的两种方式"></a>IOC容器创建bean的两种方式</h2><ul>
+<li>无参构造函数</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;student&quot;</span> <span class="attr">class</span>=<span class="string">&quot;entity.Student&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>给成员变量赋值</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;student&quot;</span> <span class="attr">class</span>=<span class="string">&quot;entity.Student&quot;</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;id&quot;</span> <span class="attr">value</span>=<span class="string">&quot;1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;张三&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;22&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>有参构造函数</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">&quot;student2&quot;</span> <span class="attr">class</span>=<span class="string">&quot;entity.Student&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;id&quot;</span> <span class="attr">value</span>=<span class="string">&quot;3&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;name&quot;</span> <span class="attr">value</span>=<span class="string">&quot;王五&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">constructor-arg</span> <span class="attr">name</span>=<span class="string">&quot;age&quot;</span> <span class="attr">value</span>=<span class="string">&quot;22&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">constructor-arg</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：在类中写了有参构造函数的时候，无参构造函数将被覆盖掉</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><bean id="给这个对象取个id，作为唯一标识，后面可以通过方法取bean" class="包名.类名">
+
+<p>使用无参构造函数创建bean的时候使用<property name="类中的属性" value="你要给的值"></property></p>
+<p>使用有参构造函数创建bean的时候使用 <constructor-arg name="类中的属性" value="你要给的值">&lt;/ <constructor-arg></p>
+</bean>
+
+<h2 id="从IOC容器中取Bean"><a href="#从IOC容器中取Bean" class="headerlink" title="从IOC容器中取Bean"></a>从IOC容器中取Bean</h2><p>注意：利用applicationContext.getBean方法获取的对象是Object类型的，所以在传参之前需要强转成Student类型。</p>
+<ul>
+<li>通过id取值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student student=(Student)applicationContext.getBean(<span class="string">&quot;student&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>注意：配置文件中不能取相同的id</p>
+<ul>
+<li>通过类型取值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Student student=(Student)applicationContext.getBean(Student.class);</span><br></pre></td></tr></table></figure>
+
+<p>当ioc容器中同时存在两个以上Student Bean的时候就会抛出异常，此时没有唯一的bean</p>
+<p>![image-20211012135227849](/Users/zhangcheng/Library/Application Support/typora-user-images/image-20211012135227849.png)</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">JAVA</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Spring</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/12/Spring%E4%BB%8EIOC%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%8E%B7%E5%8F%96bean/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
   
     <article id="post-Hexo+github搭建个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
@@ -414,6 +583,14 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
             
             <div class="clearfix"></div>
