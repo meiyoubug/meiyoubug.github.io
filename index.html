@@ -154,6 +154,127 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-人工智能导论笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能导论</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2021-10-12T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>​                         </p>
+<h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><h3 id="启发式搜索（有信息搜索）"><a href="#启发式搜索（有信息搜索）" class="headerlink" title="启发式搜索（有信息搜索）"></a>启发式搜索（有信息搜索）</h3><p>1、状态：从原问题转化出的问题描述。例如，在最短路径问题中，城市可作为状态。将原问题对应的状态称为初始状态。</p>
+<p>2、动作：从当前时刻所处状态转移到下一时刻所处状态所进行操作。一般而言这些操作都是离散的。</p>
+<p>3、状态转移：对某一时刻对应状态进行某一种操作后，所能够到达状态。</p>
+<p>4、路径：一个状态序列。该状态序列被一系列操作所连接。</p>
+<p>5、目标状态（测试目标）：评估当前状态是否为所求解对目标状态。</p>
+<h4 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h4><p>定义：在搜索到过程中利用所求解问题相关的辅助信息，其代表算法为贪婪最佳优先搜索和A*搜索。</p>
+<table>
+<thead>
+<tr>
+<th align="center">辅助信息</th>
+<th align="center">所求解问题之外、与所求解问题相关的特定信息或知识</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">评价函数f(n)</td>
+<td align="center">从当前节点n出发，根据评价函数来选择后续节点</td>
+</tr>
+<tr>
+<td align="center">启发函数h(n)</td>
+<td align="center">计算从节点n到目标节点之间所形成路径的最小代价值。</td>
+</tr>
+</tbody></table>
+<p>评价函数f(n)：选择后续节点</p>
+<p>启发函数h(n)：从一个节点到目标节点到最小路径</p>
+<h5 id="贪婪最佳优先搜索算法"><a href="#贪婪最佳优先搜索算法" class="headerlink" title="贪婪最佳优先搜索算法"></a>贪婪最佳优先搜索算法</h5><p>不足点：</p>
+<ul>
+<li>贪婪最佳优先搜索不是最优的。</li>
+<li>启发函数代价最小化这一目标会对错误的起点比较敏感。</li>
+</ul>
+<h5 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h5><p>定义评价函数：f(n)=g(n)+h(n)</p>
+<ul>
+<li>g(n)表示从起始节点到节点n的开销代价值，h(n)表示从节点n到目标节点路径中所估算到最小开销代价值。</li>
+<li>f(n)可视为经过节点n、具有最小开销代价值的路径。</li>
+</ul>
+<p>f(n)（评价函数）：评估函数</p>
+<p>g(n)：当前最小开销代价</p>
+<p>h(n)（启发函数）：后续最小开销代价</p>
+<p>![image-20211018111412178](/Users/zhangcheng/Library/Application Support/typora-user-images/image-20211018111412178.png)</p>
+<p>如果想要保证A*算法是最优的，需要启发函数h(n)是可容的和一致的，或者也称单调性，即启发函数h(n)是可容的。可容：不能高估开销代价</p>
+<h3 id="对抗搜索（博弈搜索）"><a href="#对抗搜索（博弈搜索）" class="headerlink" title="对抗搜索（博弈搜索）"></a>对抗搜索（博弈搜索）</h3><ul>
+<li>在一个竞争的环境中，智能体之间通过竞争实现相反的利益，一方最大化，这个利益，另外一方最小化这个利益。</li>
+</ul>
+<h4 id="搜索算法-1"><a href="#搜索算法-1" class="headerlink" title="搜索算法"></a>搜索算法</h4><ul>
+<li>最小最大搜索：最小最大搜索是在博弈搜索中最为基本的一种让玩家来计算最优策略的方法。</li>
+<li>Alpha-Beta剪枝搜索：一种对最小最大搜索进行改进的算法，即在搜索过程中可剪除无需搜索的分支节点，且不影响搜索结果。</li>
+<li>蒙特卡洛树搜索：通过采样而非穷举方法来实现搜索。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">人工智能</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Spring-MVC" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -883,127 +1004,6 @@
 
 
   
-    <article id="post-人工智能导论笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能导论</a>
-    </h1>
-  
-
-        
-        <a href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-10-12T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>​                         </p>
-<h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><h3 id="启发式搜索（有信息搜索）"><a href="#启发式搜索（有信息搜索）" class="headerlink" title="启发式搜索（有信息搜索）"></a>启发式搜索（有信息搜索）</h3><p>1、状态：从原问题转化出的问题描述。例如，在最短路径问题中，城市可作为状态。将原问题对应的状态称为初始状态。</p>
-<p>2、动作：从当前时刻所处状态转移到下一时刻所处状态所进行操作。一般而言这些操作都是离散的。</p>
-<p>3、状态转移：对某一时刻对应状态进行某一种操作后，所能够到达状态。</p>
-<p>4、路径：一个状态序列。该状态序列被一系列操作所连接。</p>
-<p>5、目标状态（测试目标）：评估当前状态是否为所求解对目标状态。</p>
-<h4 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h4><p>定义：在搜索到过程中利用所求解问题相关的辅助信息，其代表算法为贪婪最佳优先搜索和A*搜索。</p>
-<table>
-<thead>
-<tr>
-<th align="center">辅助信息</th>
-<th align="center">所求解问题之外、与所求解问题相关的特定信息或知识</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">评价函数f(n)</td>
-<td align="center">从当前节点n出发，根据评价函数来选择后续节点</td>
-</tr>
-<tr>
-<td align="center">启发函数h(n)</td>
-<td align="center">计算从节点n到目标节点之间所形成路径的最小代价值。</td>
-</tr>
-</tbody></table>
-<p>评价函数f(n)：选择后续节点</p>
-<p>启发函数h(n)：从一个节点到目标节点到最小路径</p>
-<h5 id="贪婪最佳优先搜索算法"><a href="#贪婪最佳优先搜索算法" class="headerlink" title="贪婪最佳优先搜索算法"></a>贪婪最佳优先搜索算法</h5><p>不足点：</p>
-<ul>
-<li>贪婪最佳优先搜索不是最优的。</li>
-<li>启发函数代价最小化这一目标会对错误的起点比较敏感。</li>
-</ul>
-<h5 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h5><p>定义评价函数：f(n)=g(n)+h(n)</p>
-<ul>
-<li>g(n)表示从起始节点到节点n的开销代价值，h(n)表示从节点n到目标节点路径中所估算到最小开销代价值。</li>
-<li>f(n)可视为经过节点n、具有最小开销代价值的路径。</li>
-</ul>
-<p>f(n)（评价函数）：评估函数</p>
-<p>g(n)：当前最小开销代价</p>
-<p>h(n)（启发函数）：后续最小开销代价</p>
-<p>![image-20211018111412178](/Users/zhangcheng/Library/Application Support/typora-user-images/image-20211018111412178.png)</p>
-<p>如果想要保证A*算法是最优的，需要启发函数h(n)是可容的和一致的，或者也称单调性，即启发函数h(n)是可容的。可容：不能高估开销代价</p>
-<h3 id="对抗搜索（博弈搜索）"><a href="#对抗搜索（博弈搜索）" class="headerlink" title="对抗搜索（博弈搜索）"></a>对抗搜索（博弈搜索）</h3><ul>
-<li>在一个竞争的环境中，智能体之间通过竞争实现相反的利益，一方最大化，这个利益，另外一方最小化这个利益。</li>
-</ul>
-<h4 id="搜索算法-1"><a href="#搜索算法-1" class="headerlink" title="搜索算法"></a>搜索算法</h4><ul>
-<li>最小最大搜索：最小最大搜索是在博弈搜索中最为基本的一种让玩家来计算最优策略的方法。</li>
-<li>Alpha-Beta剪枝搜索：一种对最小最大搜索进行改进的算法，即在搜索过程中可剪除无需搜索的分支节点，且不影响搜索结果。</li>
-<li>蒙特卡洛树搜索：通过采样而非穷举方法来实现搜索。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">人工智能</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-Hexo+github搭建个人博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -1259,6 +1259,10 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">人工智能</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">JAVA</a>
               </li>
              
@@ -1275,19 +1279,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">人工智能</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">hexo</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">github</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
             
             <div class="clearfix"></div>
