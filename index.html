@@ -154,6 +154,122 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-LeedCode3&amp;4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/11/03/LeedCode3&4/">LeedCode3&amp;4</a>
+    </h1>
+  
+
+        
+        <a href="/2021/11/03/LeedCode3&4/" class="archive-article-date">
+  	<time datetime="2021-11-03T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-11-03</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1"><a href="#1" class="headerlink" title="1"></a>1</h1><ul>
+<li>题目</li>
+</ul>
+<p>给定一个字符串 <code>s</code> ，请你找出其中不含有重复字符的 <strong>最长子串</strong> 的长度。</p>
+<ul>
+<li>实例</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入: s = &quot;abcabcbb&quot;</span><br><span class="line">输出: 3 </span><br><span class="line">解释: 因为无重复字符的最长子串是 &quot;abc&quot;，所以其长度为 3。</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>题解</li>
+</ul>
+<p>这个题用map来做，key保存字符，value保存字符所在地址+1，start和end都从0开始，当遇到重复字符时，start从自身的数值与map.get(重复的那个字符)取最大者（因为不可能还回去遍历），最终结果result取result自身与end-start+1当中的最大者。</p>
+<p>charAt(index)：比如s=aaabbc 那么c=charAt(4)的结果是b，取index那个地址的字符，只能用在字符串中</p>
+<p>Map.containsKey(x):判断map集合中是否存在x这个key值</p>
+<p>Map.containsValue(x):判断map集合中是否存在x这个value值</p>
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">        Map&lt;Character,Integer&gt; map=<span class="keyword">new</span> HashMap();</span><br><span class="line">        <span class="keyword">int</span> result=<span class="number">0</span>; <span class="comment">//保存目前最长子串长度</span></span><br><span class="line">        <span class="keyword">int</span> start=<span class="number">0</span>;<span class="comment">//字串开始位置</span></span><br><span class="line">        <span class="keyword">int</span> end=<span class="number">0</span>;<span class="comment">//字串结束位置</span></span><br><span class="line">        <span class="keyword">int</span> len=s.length();<span class="comment">//字符串的长度</span></span><br><span class="line">        <span class="keyword">char</span> c;</span><br><span class="line">        <span class="keyword">for</span>(end=<span class="number">0</span>,start=<span class="number">0</span>;end&lt;len;end++)</span><br><span class="line">        &#123;</span><br><span class="line">             c=s.charAt(end);</span><br><span class="line">             <span class="keyword">if</span>(map.containsKey(c))</span><br><span class="line">             &#123;</span><br><span class="line">                 start=Math.max(map.get(c),start);</span><br><span class="line">             &#125;</span><br><span class="line">             result=Math.max(result,end-start+<span class="number">1</span>);</span><br><span class="line">             map.put(c,end+<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="2"><a href="#2" class="headerlink" title="2"></a>2</h1><ul>
+<li>题目</li>
+</ul>
+<p>给定两个大小分别为 <code>m</code> 和 <code>n</code> 的正序（从小到大）数组 <code>nums1</code> 和 <code>nums2</code>。请你找出并返回这两个正序数组的 <strong>中位数</strong> 。</p>
+<ul>
+<li>示例</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 = [1,3], nums2 = [2]</span><br><span class="line">输出：2.00000</span><br><span class="line">解释：合并数组 = [1,2,3] ，中位数 2</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>解法</li>
+</ul>
+<p>暴力破解：先把两个数组合并，然后用java自带的Array.sort(数组名)方法排好序，然后根据题目要求来求中位值。</p>
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(<span class="keyword">int</span>[] nums1, <span class="keyword">int</span>[] nums2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">double</span> mid=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> m=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> n=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">int</span> len1=nums1.length;</span><br><span class="line">            <span class="keyword">int</span> len2=nums2.length;</span><br><span class="line">            <span class="keyword">int</span>[] nums3=<span class="keyword">new</span> <span class="keyword">int</span>[len1+len2];</span><br><span class="line">            <span class="keyword">int</span> index=<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;len1;i++)</span><br><span class="line">            &#123;</span><br><span class="line">                nums3[i]=nums1[i];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=len1;j&lt;len1+len2;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                nums3[j]=nums2[index];</span><br><span class="line">                index++;</span><br><span class="line">            &#125;</span><br><span class="line">            Arrays.sort(nums3);</span><br><span class="line">            <span class="keyword">int</span> len3=nums3.length;</span><br><span class="line">            <span class="keyword">if</span>(len3%<span class="number">2</span>==<span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">               m=len3/<span class="number">2</span>;</span><br><span class="line">               n=m+<span class="number">1</span>;</span><br><span class="line">               mid=(nums3[m-<span class="number">1</span>]*<span class="number">1.0</span>+nums3[n-<span class="number">1</span>]*<span class="number">1.0</span>)/<span class="number">2.0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">               m=len3/<span class="number">2</span>;</span><br><span class="line">               n=m+<span class="number">1</span>;</span><br><span class="line">               mid=nums3[n-<span class="number">1</span>];</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">LeedCode</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/11/03/LeedCode3&4/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-LeedCode1&amp;2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -238,127 +354,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/11/02/LeedCode1&2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-人工智能导论笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能导论</a>
-    </h1>
-  
-
-        
-        <a href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/" class="archive-article-date">
-  	<time datetime="2021-10-12T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>​                         </p>
-<h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><h3 id="启发式搜索（有信息搜索）"><a href="#启发式搜索（有信息搜索）" class="headerlink" title="启发式搜索（有信息搜索）"></a>启发式搜索（有信息搜索）</h3><p>1、状态：从原问题转化出的问题描述。例如，在最短路径问题中，城市可作为状态。将原问题对应的状态称为初始状态。</p>
-<p>2、动作：从当前时刻所处状态转移到下一时刻所处状态所进行操作。一般而言这些操作都是离散的。</p>
-<p>3、状态转移：对某一时刻对应状态进行某一种操作后，所能够到达状态。</p>
-<p>4、路径：一个状态序列。该状态序列被一系列操作所连接。</p>
-<p>5、目标状态（测试目标）：评估当前状态是否为所求解对目标状态。</p>
-<h4 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h4><p>定义：在搜索到过程中利用所求解问题相关的辅助信息，其代表算法为贪婪最佳优先搜索和A*搜索。</p>
-<table>
-<thead>
-<tr>
-<th align="center">辅助信息</th>
-<th align="center">所求解问题之外、与所求解问题相关的特定信息或知识</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">评价函数f(n)</td>
-<td align="center">从当前节点n出发，根据评价函数来选择后续节点</td>
-</tr>
-<tr>
-<td align="center">启发函数h(n)</td>
-<td align="center">计算从节点n到目标节点之间所形成路径的最小代价值。</td>
-</tr>
-</tbody></table>
-<p>评价函数f(n)：选择后续节点</p>
-<p>启发函数h(n)：从一个节点到目标节点到最小路径</p>
-<h5 id="贪婪最佳优先搜索算法"><a href="#贪婪最佳优先搜索算法" class="headerlink" title="贪婪最佳优先搜索算法"></a>贪婪最佳优先搜索算法</h5><p>不足点：</p>
-<ul>
-<li>贪婪最佳优先搜索不是最优的。</li>
-<li>启发函数代价最小化这一目标会对错误的起点比较敏感。</li>
-</ul>
-<h5 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h5><p>定义评价函数：f(n)=g(n)+h(n)</p>
-<ul>
-<li>g(n)表示从起始节点到节点n的开销代价值，h(n)表示从节点n到目标节点路径中所估算到最小开销代价值。</li>
-<li>f(n)可视为经过节点n、具有最小开销代价值的路径。</li>
-</ul>
-<p>f(n)（评价函数）：评估函数</p>
-<p>g(n)：当前最小开销代价</p>
-<p>h(n)（启发函数）：后续最小开销代价</p>
-<p>![image-20211018111412178](/Users/zhangcheng/Library/Application Support/typora-user-images/image-20211018111412178.png)</p>
-<p>如果想要保证A*算法是最优的，需要启发函数h(n)是可容的和一致的，或者也称单调性，即启发函数h(n)是可容的。可容：不能高估开销代价</p>
-<h3 id="对抗搜索（博弈搜索）"><a href="#对抗搜索（博弈搜索）" class="headerlink" title="对抗搜索（博弈搜索）"></a>对抗搜索（博弈搜索）</h3><ul>
-<li>在一个竞争的环境中，智能体之间通过竞争实现相反的利益，一方最大化，这个利益，另外一方最小化这个利益。</li>
-</ul>
-<h4 id="搜索算法-1"><a href="#搜索算法-1" class="headerlink" title="搜索算法"></a>搜索算法</h4><ul>
-<li>最小最大搜索：最小最大搜索是在博弈搜索中最为基本的一种让玩家来计算最优策略的方法。</li>
-<li>Alpha-Beta剪枝搜索：一种对最小最大搜索进行改进的算法，即在搜索过程中可剪除无需搜索的分支节点，且不影响搜索结果。</li>
-<li>蒙特卡洛树搜索：通过采样而非穷举方法来实现搜索。</li>
-</ul>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">人工智能</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">展开全文 >></a>
         </p>
       
 
@@ -539,6 +534,127 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2021/10/12/Spring-MVC/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-人工智能导论笔记" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">人工智能导论</a>
+    </h1>
+  
+
+        
+        <a href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/" class="archive-article-date">
+  	<time datetime="2021-10-12T06:20:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-10-12</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>​                         </p>
+<h2 id="人工智能"><a href="#人工智能" class="headerlink" title="人工智能"></a>人工智能</h2><h3 id="启发式搜索（有信息搜索）"><a href="#启发式搜索（有信息搜索）" class="headerlink" title="启发式搜索（有信息搜索）"></a>启发式搜索（有信息搜索）</h3><p>1、状态：从原问题转化出的问题描述。例如，在最短路径问题中，城市可作为状态。将原问题对应的状态称为初始状态。</p>
+<p>2、动作：从当前时刻所处状态转移到下一时刻所处状态所进行操作。一般而言这些操作都是离散的。</p>
+<p>3、状态转移：对某一时刻对应状态进行某一种操作后，所能够到达状态。</p>
+<p>4、路径：一个状态序列。该状态序列被一系列操作所连接。</p>
+<p>5、目标状态（测试目标）：评估当前状态是否为所求解对目标状态。</p>
+<h4 id="搜索算法"><a href="#搜索算法" class="headerlink" title="搜索算法"></a>搜索算法</h4><p>定义：在搜索到过程中利用所求解问题相关的辅助信息，其代表算法为贪婪最佳优先搜索和A*搜索。</p>
+<table>
+<thead>
+<tr>
+<th align="center">辅助信息</th>
+<th align="center">所求解问题之外、与所求解问题相关的特定信息或知识</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">评价函数f(n)</td>
+<td align="center">从当前节点n出发，根据评价函数来选择后续节点</td>
+</tr>
+<tr>
+<td align="center">启发函数h(n)</td>
+<td align="center">计算从节点n到目标节点之间所形成路径的最小代价值。</td>
+</tr>
+</tbody></table>
+<p>评价函数f(n)：选择后续节点</p>
+<p>启发函数h(n)：从一个节点到目标节点到最小路径</p>
+<h5 id="贪婪最佳优先搜索算法"><a href="#贪婪最佳优先搜索算法" class="headerlink" title="贪婪最佳优先搜索算法"></a>贪婪最佳优先搜索算法</h5><p>不足点：</p>
+<ul>
+<li>贪婪最佳优先搜索不是最优的。</li>
+<li>启发函数代价最小化这一目标会对错误的起点比较敏感。</li>
+</ul>
+<h5 id="A-算法"><a href="#A-算法" class="headerlink" title="A*算法"></a>A*算法</h5><p>定义评价函数：f(n)=g(n)+h(n)</p>
+<ul>
+<li>g(n)表示从起始节点到节点n的开销代价值，h(n)表示从节点n到目标节点路径中所估算到最小开销代价值。</li>
+<li>f(n)可视为经过节点n、具有最小开销代价值的路径。</li>
+</ul>
+<p>f(n)（评价函数）：评估函数</p>
+<p>g(n)：当前最小开销代价</p>
+<p>h(n)（启发函数）：后续最小开销代价</p>
+<p>![image-20211018111412178](/Users/zhangcheng/Library/Application Support/typora-user-images/image-20211018111412178.png)</p>
+<p>如果想要保证A*算法是最优的，需要启发函数h(n)是可容的和一致的，或者也称单调性，即启发函数h(n)是可容的。可容：不能高估开销代价</p>
+<h3 id="对抗搜索（博弈搜索）"><a href="#对抗搜索（博弈搜索）" class="headerlink" title="对抗搜索（博弈搜索）"></a>对抗搜索（博弈搜索）</h3><ul>
+<li>在一个竞争的环境中，智能体之间通过竞争实现相反的利益，一方最大化，这个利益，另外一方最小化这个利益。</li>
+</ul>
+<h4 id="搜索算法-1"><a href="#搜索算法-1" class="headerlink" title="搜索算法"></a>搜索算法</h4><ul>
+<li>最小最大搜索：最小最大搜索是在博弈搜索中最为基本的一种让玩家来计算最优策略的方法。</li>
+<li>Alpha-Beta剪枝搜索：一种对最小最大搜索进行改进的算法，即在搜索过程中可剪除无需搜索的分支节点，且不影响搜索结果。</li>
+<li>蒙特卡洛树搜索：通过采样而非穷举方法来实现搜索。</li>
+</ul>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">人工智能</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2021/10/12/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E5%AF%BC%E8%AE%BA%E7%AC%94%E8%AE%B0/">展开全文 >></a>
         </p>
       
 
@@ -1263,7 +1379,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">人工智能</a>
+                <a href="javascript:void(0)" class="js-tag color4">LeedCode</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1275,11 +1391,11 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
+                <a href="javascript:void(0)" class="js-tag color5">人工智能</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color4">LeedCode</a>
+                <a href="javascript:void(0)" class="js-tag color2">Spring</a>
               </li>
             
             <div class="clearfix"></div>
